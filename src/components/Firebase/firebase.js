@@ -10,16 +10,7 @@ const config = {
   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 };
-/*
-const config = {
-  apiKey: "AIzaSyDx92xTnNOWgH3wxbbH9_7srrZt8O7KG9Q",
-  authDomain: "risingsundb-110.firebaseapp.com",
-  databaseURL: "https://risingsundb-110.firebaseio.com",
-  projectId: "risingsundb-110",
-  storageBucket: "risingsundb-110.appspot.com",
-  messagingSenderId: "593916236287"
-};
-*/
+
 class Firebase{
     constructor(){
         app.initializeApp(config);
