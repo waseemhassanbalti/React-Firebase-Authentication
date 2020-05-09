@@ -52,8 +52,9 @@ const SignUpPage = () => (
         })
         .then(authUser => {
           //event.preventDefault();
-          //this.setState({ ...INITIAL_STATE });
+          this.setState({ ...INITIAL_STATE });
           //this.props.history.push(ROUTES.HOME);
+          this.props.firebase.doSignOut2();
         })
         .catch(error => {
           this.setState({ error });
