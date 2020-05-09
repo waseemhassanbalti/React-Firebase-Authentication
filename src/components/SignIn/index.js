@@ -12,7 +12,9 @@ const SignInPage = () => (
     <h1>SignIn</h1>
     <SignInForm />
     <PasswordForgetLink />
-    <SignUpLink />
+   {
+   // <SignUpLink />
+   }
   </div>
 );
  
@@ -21,7 +23,7 @@ const INITIAL_STATE = {
   password: '',
   error: null,
 };
- 
+   
 class SignInFormBase extends Component {
   constructor(props) {
     super(props);

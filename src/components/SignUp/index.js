@@ -4,7 +4,11 @@ import { compose } from 'recompose';
 //import {Link} from 'react-router-dom';
 //import { FirebaseContext } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import * as ROLES from '../../constants/roles';
 import { withFirebase } from '../Firebase';
+import AdminPage from '../Admin'
+import {withAuthorization } from '../Session';
+
 
 const SignUpPage = () => (
     <div>
@@ -18,6 +22,8 @@ const SignUpPage = () => (
     email: '',
     passwordOne: '',
     passwordTwo: '',
+    roles:'Guest',
+    contactNo: '',
     error: null,
   };    
  
@@ -29,7 +35,7 @@ const SignUpPage = () => (
     }
 
     onSubmit = event => {
-      const { username, email, passwordOne } = this.state;
+      const { username, email, passwordOne,contactNo,roles } = this.state;
  
       this.props.firebase
         .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -40,11 +46,14 @@ const SignUpPage = () => (
             .set({
               username,
               email,
+              roles,
+              contactNo,
             });
         })
         .then(authUser => {
-          this.setState({ ...INITIAL_STATE });
-          this.props.history.push(ROUTES.HOME);
+          //event.preventDefault();
+          //this.setState({ ...INITIAL_STATE });
+          //this.props.history.push(ROUTES.HOME);
         })
         .catch(error => {
           this.setState({ error });
@@ -56,6 +65,11 @@ const SignUpPage = () => (
     onChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
+
+    
+    onChangeDropDown = event =>{
+      this.setState({ [event.target.name]: event.target.value });
+    }
     
     render() {
         const {
@@ -63,6 +77,8 @@ const SignUpPage = () => (
             email,
             passwordOne,
             passwordTwo,
+            roles,
+            contactNo,
             error,
           } = this.state;
 
@@ -102,6 +118,23 @@ const SignUpPage = () => (
                 type="password"
                 placeholder="Confirm Password"
               />
+              <label>
+                User Role:
+                <select name="roles" value = {roles} onChange={this.onChangeDropDown} >
+                  <option value="Guest" >Guest</option>
+                  <option value="Admin">Admin</option>
+              </select>
+              </label>
+
+
+              <input
+                name="contactNo"
+                value={contactNo}
+                onChange={this.onChange}
+                type="number"
+                placeholder="Contact No"
+              />
+
               <button disabled={isInvalid} type="submit">
                   Sign Up
                </button>
@@ -112,18 +145,22 @@ const SignUpPage = () => (
         }
   }
    
-  const SignUpLink = () => (
+  /*const SignUpLink = () => (
     <p>
       Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
     </p>
-  );
+  );*/
    
-  //const SignUpForm = withRouter(withFirebase(SignUpFormBase));
+  //const SignUpForm = withFirebase(SignUpFormBase);
+  
+const condition = authUser =>
+authUser && authUser.roles==="Admin";
+
   const SignUpForm = compose(
+    withAuthorization(condition),
     withRouter,
     withFirebase,
   )(SignUpFormBase);
   export default SignUpPage;
-   
-  export { SignUpForm, SignUpLink };
+  export { SignUpForm};
 

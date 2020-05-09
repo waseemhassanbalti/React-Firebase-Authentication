@@ -1,7 +1,9 @@
 import React from 'react';
+import { compose } from 'recompose';
 import {withAuthorization } from '../Session';
 import * as ROLES from '../../constants/roles';
 import { withFirebase } from '../Firebase';
+
  
 class AdminPage extends React.Component {
     constructor(props) {
@@ -39,15 +41,14 @@ class AdminPage extends React.Component {
 
       render() {
         const { users, loading } = this.state;
-        console.log("Users:"+users+"loading"+loading)
+        console.log("Users: "+users+"loading "+loading)
         return (
           <div>
             <h1>Admin</h1>
+            <p> The Admin Page is accessible by every signed in admin user.</p>
             {loading && <div>Loading ...</div>}
  
             <UserList users={users} />
-            
-            
           </div>
         );
       }
@@ -59,14 +60,21 @@ const UserList = ( {users} ) => (
       {users.map(user => (
         <li key={user.uid}>
           <span>
-            <strong>ID:</strong> {user.uid}
+            <strong>ID: </strong> {user.uid}
           </span>
           <span>
-            <strong>E-Mail:</strong> {user.email}
+            <strong>E-Mail: </strong> {user.email}
           </span>
           <span>
-            <strong>Username:</strong> {user.username}
+            <strong>Username: </strong> {user.username}
           </span>
+          <span>
+            <strong>Contact No : </strong> {user.contactNo}
+          </span>
+          <span>
+            <strong>User Type : </strong> {user.roles}
+          </span>
+
         </li>
       ))}
     </ul>
@@ -75,6 +83,11 @@ const UserList = ( {users} ) => (
   
 //export default withFirebase(AdminPage);
 
-const condition = authUser => !!authUser;
- 
-export default withAuthorization(condition)(AdminPage);
+//const condition = authUser => !!authUser;
+
+const condition = authUser =>
+authUser && authUser.roles==="Admin";
+export default compose(withAuthorization(condition),withFirebase,)(AdminPage);
+
+
+//export default withAuthorization(condition)(AdminPage);
