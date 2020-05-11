@@ -7,11 +7,15 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "firebase": "^7.14.2",
+    "formik": "^1.5.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-intl": "^4.5.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-    "recompose": "^0.30.0"
+    "reactstrap": "^8.0.1",
+    "recompose": "^0.30.0",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",
