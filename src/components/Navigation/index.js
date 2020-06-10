@@ -21,7 +21,12 @@ const Navigation = () => (
 );
    
   const NavigationAuth = ({ authUser }) => (
-    <ul>
+   
+
+    <nav className="nav-wrapper grey darken-3">
+      <div className="container"> 
+      <Link to={ROUTES.HOME} className="brand-logo" >Rising Sun </Link> 
+      <ul className="right">
     {/*  <li>
         <Link to={ROUTES.LANDING}>Landing</Link>
       </li>*/}
@@ -41,6 +46,8 @@ const Navigation = () => (
         <SignOutButton />
       </li>
     </ul>
+      </div>
+    </nav>
     
   );
    

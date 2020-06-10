@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+//import * as admin from 'firebase-admin';
 //import config from "./config";
 
 
@@ -16,12 +17,16 @@ const config = {
 
 class Firebase{
     constructor(){
+         
         app.initializeApp(config);
         this.auth = app.auth();
 
         var secondaryApp = app.initializeApp(config, "Secondary");
         this.auth2 = secondaryApp.auth();
         
+//       var admin = admin.initializeApp(config,"Admin");
+//       this.adminAuth = admin.auth();
+
         this.db = app.database();
     }
     
@@ -36,6 +41,9 @@ class Firebase{
     doSignOut = () => this.auth.signOut();
     
     doSignOut2 = () => this.auth2.signOut();
+
+  //  doDelete = (uid)=>
+  //  this.adminAuth.deleteUser(uid);
 
     doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
  

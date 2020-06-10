@@ -32,7 +32,8 @@ class PasswordForgetFormBase extends Component {
  
    // this.state = { ...INITIAL_STATE };
     this.state = {
-      visible: false
+      visible: false,
+      errorMsg:null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -46,10 +47,10 @@ class PasswordForgetFormBase extends Component {
       .doPasswordReset(email)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.setState({visible:true});
+        this.setState({visible:true, errorMsg:"We have sent email, Now you can reset your password"});
       })
       .catch(error => {
-        this.setState({ error });
+        this.setState({ visible:true , errorMsg : error.message});
       });
 
   };
@@ -128,7 +129,7 @@ class PasswordForgetFormBase extends Component {
                       isOpen={this.state.visible}
                       toggle={this.onDismiss}
                       >
-                        We have sent email, Now you can reset your password
+                        {this.state.errorMsg}
                       </Alert>
 
                       <FormGroup className="form-group has-top-label">
@@ -158,9 +159,6 @@ class PasswordForgetFormBase extends Component {
             
           </Colxx>
         </Row>
-
-
-
     );
   }
 }

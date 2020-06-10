@@ -5,6 +5,7 @@ import { Row, Card, Input, CardTitle, Label, CardBody, FormGroup, Button, Alert,
 import { Formik, Form, Field } from "formik";
 import { Colxx } from '../Common/CustomBootstrap';
 import * as Yup from "yup";
+import {withAuthorization } from '../Session';
 //import IntlMessages from '../../helper/IntlMessages';
 import FormikCustomWithTopLabels from '../../testForm';
  
@@ -200,12 +201,14 @@ class SignInFormBase extends Component {
     );
   }
 }
- 
+
 const SignInForm = compose(
   withRouter,
   withFirebase,
 )(SignInFormBase);
- 
-export default SignInPage;
+
+const condition = authUser => authUser ==null;
+//export default SignInPage;
+export default withAuthorization(condition)(SignInPage);
  
 export { SignInForm };
